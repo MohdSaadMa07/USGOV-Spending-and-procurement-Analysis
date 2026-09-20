@@ -1,6 +1,6 @@
 # US Government Spending & Procurement Analysis
 
-An interactive analytics project built from public federal spending data from [USAspending.gov](https://www.usaspending.gov/).
+An end-to-end analytics project using public federal spending data from [USAspending.gov](https://www.usaspending.gov/). The project combines SQL Server data preparation, analytical views, Power BI reporting, and a natural-language query interface for exploring procurement patterns.
 
 ## Live Demo
 
@@ -8,35 +8,86 @@ An interactive analytics project built from public federal spending data from [U
 
 > The demo runs from a local machine through a free ngrok tunnel. The computer, SQL Server, FastAPI, and ngrok must be running for the link to work.
 
-## Project Highlights
+## Analytical Objective
 
-- Analyze U.S. government spending and procurement activity.
-- Ask natural-language questions about federal spending.
-- View validated, read-only SQL results.
-- Explore Power BI-inspired report visuals.
-- Compare agencies, recipients, fiscal years, award types, and spending concentration.
+The goal is to make federal procurement data easier to analyze and explain. The project focuses on:
 
-## Application
+- How federal obligations change across fiscal years.
+- Which agencies and recipients account for the largest obligations.
+- How concentrated spending is among the top recipients.
+- Which award types drive total spending.
+- How spending changes from one period to the next.
+- How natural-language questions can be translated into transparent analytical queries.
+
+## Key Metrics
+
+The report is designed around practical procurement KPIs:
+
+- Total federal obligations
+- Obligations by fiscal year
+- Obligations by agency
+- Obligations by recipient
+- Top-10 recipient concentration
+- Unique vendors or recipients
+- Award-type distribution
+- Period-over-period spending change
+
+The captured report snapshot represents approximately **$104.65 billion** in obligations, with the top ten recipients accounting for approximately **24.14%** of total obligations and roughly **35,000 unique recipients**.
+
+## Analytical Workflow
+
+```text
+Public USAspending data
+        |
+        v
+SQL Server data store
+        |
+        v
+Analytical views and aggregations
+        |
+        +--> Power BI report and visual analysis
+        |
+        +--> FastAPI read-only API
+                    |
+                    v
+          Natural-language query desk
+```
+
+The workflow separates data preparation from reporting and exploration:
+
+1. Store the public procurement data in SQL Server.
+2. Create reusable views for agencies, recipients, fiscal years, award types, and concentration.
+3. Use Power BI to communicate trends and comparisons.
+4. Expose selected analytical views through a read-only API.
+5. Let users ask business questions in plain language and inspect the generated SQL.
+
+## Report Views
 
 ### Query Desk
 
-Ask questions such as:
+The Query Desk supports questions such as:
 
 - Show total spending by fiscal year.
-- Which agencies have the highest obligations?
+- Which agencies have the highest total obligations?
+- Which recipients receive the most federal obligations?
+- Which award types account for the most spending?
 - What percentage is concentrated among the top ten recipients?
+- How did spending change between fiscal years?
+
+Each answer returns the result rows and generated SQL so the analysis remains inspectable rather than acting as a black box.
 
 ### Power BI Visuals
 
-The visual gallery includes:
+The Power BI analysis includes:
 
-- Total federal obligations
-- Top-10 recipient concentration
-- Unique vendors
-- Top recipients
-- Fiscal-year spending trends
-- Period-over-period changes
-- Award-type breakdowns
+- Total federal obligations KPI
+- Top-10 concentration KPI
+- Unique vendor KPI
+- Top recipients ranked table
+- Top recipients comparison chart
+- Fiscal-year trend line
+- Period-over-period change waterfall
+- Award-type composition chart
 
 ## Screenshots
 
@@ -44,7 +95,7 @@ The visual gallery includes:
 
 ![Power BI report](ui/public/MAIN%20HEADER%20IMAGE.png)
 
-| Visual | Preview |
+| Analytical view | Preview |
 | --- | --- |
 | Total obligations | [Open image](ui/public/01-total-obligations.png) |
 | Top-10 concentration | [Open image](ui/public/02-top10-concentration.png) |
@@ -55,14 +106,57 @@ The visual gallery includes:
 
 > Add a Query Desk screenshot at `ui/public/query-desk.png` when available.
 
+## Data Model and Analytical Views
+
+The text-to-SQL layer uses a small set of approved analytical views:
+
+- `vw_AgencySpending` - agencies ranked by total obligations.
+- `vw_AwardTypeSpending` - obligations and transaction counts by award type.
+- `vw_FederalSpendingByYear` - fiscal-year totals.
+- `vw_PeriodSpendingChange` - fiscal-year totals with prior-period change.
+- `vw_RecipientSpendingRank` - recipients ranked by obligations.
+- `vw_Top10RecipientConcentration` - spending share held by the top ten recipients.
+
+These views turn repeated analytical questions into reusable reporting structures and keep the dashboard logic separate from raw transaction-level data.
+
+## Skills Demonstrated
+
+### Data Analysis
+
+- KPI definition and metric design
+- Trend analysis across fiscal years
+- Ranking and Pareto-style concentration analysis
+- Period-over-period comparison
+- Category analysis by award type
+- Translating business questions into measurable queries
+- Communicating findings through dashboards and visual summaries
+
+### SQL and Data Preparation
+
+- SQL Server and T-SQL
+- Aggregations, ranking, grouping, and filtering
+- Reusable analytical views
+- Parameterized queries
+- Read-only data access patterns
+- Metadata-driven schema context for query generation
+
+### Data Science and AI Exploration
+
+- Natural-language-to-SQL workflow
+- Prompt construction from live analytical schema metadata
+- SQL parsing and validation with `sqlglot`
+- Guardrails for restricting generated queries to approved views
+- Transparent results with generated SQL shown to the user
+
 ## Technology
 
-- **Frontend:** React, Vite, JavaScript
-- **Backend:** FastAPI, Python
+- **Data source:** USAspending.gov
 - **Database:** Microsoft SQL Server
-- **Analytics:** Power BI
-- **AI layer:** Groq natural-language-to-SQL
-- **Deployment/demo:** Render configuration and ngrok tunnel
+- **Analytics and reporting:** Power BI
+- **Backend:** Python, FastAPI, pyodbc
+- **Query validation:** sqlglot
+- **Natural-language layer:** Groq
+- **Frontend:** React, Vite, JavaScript
 
 ## Run Locally
 
@@ -70,7 +164,7 @@ The visual gallery includes:
 
 - Python 3.10+
 - Node.js and npm
-- SQL Server with the project database
+- SQL Server with the project database and views
 - ODBC Driver 17 or 18 for SQL Server
 
 ### Setup
@@ -88,29 +182,38 @@ Open the application at:
 http://127.0.0.1:8000/ui/
 ```
 
-For text-to-SQL, add your own Groq key to `.env`. Never commit `.env` or API keys.
+For natural-language queries, add your own Groq key to `.env`. Never commit `.env`, API keys, or database credentials.
 
-## API
+## API Routes
 
-- `/ui/` - web application
-- `/docs` - interactive API documentation
-- `/health` - service and database health check
-- `/api/agency-spending` - agency spending data
-- `/api/ask` - natural-language analytics queries
+- `/ui/` - interactive analytics application
+- `/docs` - FastAPI documentation
+- `/health` - application and database health check
+- `/api/agency-spending` - agency spending data with optional fiscal-year filtering
+- `/api/ask` - natural-language analytics questions
 
 ## Power BI Report
 
 [Open the interactive Power BI report](https://app.powerbi.com/groups/me/reports/7171e917-4de9-4ce7-ac9e-34918540cf3a/7d10024e7d68ae80975d?experience=power-bi)
 
-Power BI access may require permission. The captured visuals above provide a viewable alternative.
+Power BI access may require permission. The captured visuals in this repository provide a viewable alternative.
 
-## Security
+## Analytical Safeguards
 
 - The application is read-only.
-- Generated queries are validated before execution.
-- SQL Server port 1433 is not exposed through the demo.
-- Credentials and API keys are stored locally or in hosting environment variables.
+- Generated SQL is validated before execution.
+- Queries are restricted to approved analytical views.
+- Results are capped to prevent oversized responses.
+- Database errors are sanitized before being returned to users.
+- SQL Server port 1433 is not exposed through the public demo.
+
+## Limitations and Next Steps
+
+- The current live demo depends on a local SQL Server and local machine availability.
+- The free ngrok URL is stable, but the demo is unavailable when the local services are stopped.
+- A production deployment would use a hosted database, managed credentials, and a permanent application host.
+- Future analysis could add anomaly detection, agency peer comparisons, geographic analysis, and automated report refreshes.
 
 ## Data
 
-This project uses public U.S. government spending data from USAspending.gov.
+This project uses public U.S. government spending data from USAspending.gov. The report is intended for exploratory analysis and portfolio demonstration.
