@@ -131,16 +131,19 @@ $env:RUN_TEXT2SQL_EVAL = "1"
 
   ### Deploy to Render
 
-  This repository includes `render.yaml` for a single Render web service. The
-  service builds the Vite UI and serves it from FastAPI at `/ui/`.
+  This repository includes `render.yaml` and `Dockerfile` for a single Render
+  web service. The image installs Microsoft ODBC Driver 18, builds the Vite UI,
+  and serves it from FastAPI at `/ui/`.
 
   1. Create a Render Web Service from this GitHub repository.
-  2. Select the `main` branch. Render can use the committed `render.yaml`
-    settings automatically.
+    2. Select the `main` branch. Render can use the committed `render.yaml`
+      settings automatically.
   3. Add the values from `.env.example` as Render environment variables. Do
     not upload `.env`.
-  4. Set `SQL_SERVER` and the related database variables to a reachable remote
-    SQL Server. A local `localhost` database is not reachable from Render.
+    4. Set `SQL_SERVER` and the related database variables to a reachable remote
+      SQL Server. A local `localhost` database is not reachable from Render.
+      Use SQL authentication (`SQL_USERNAME` and `SQL_PASSWORD`); Windows
+      Trusted Connection cannot authenticate from the Linux container.
   5. Set `LLM_API_KEY` (or `GROQ_API_KEY`) if text-to-SQL is enabled.
 
   After deployment, open `/ui/`. The root URL is a lightweight service check;
