@@ -37,7 +37,7 @@ app = FastAPI(
 
 _ask_rate_limiter = RateLimiter()
 _ui_root = Path(__file__).resolve().parent.parent / "ui"
-_ui_directory = _ui_root / "dist" if (_ui_root / "dist").exists() else _ui_root
+_ui_directory = _ui_root / "dist"
 app.mount("/ui", StaticFiles(directory=_ui_directory, html=True), name="ui")
 
 
