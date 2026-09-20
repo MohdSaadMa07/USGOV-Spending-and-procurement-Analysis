@@ -9,6 +9,7 @@ const EXAMPLES = [
 ];
 
 const POWER_BI_REPORT_URL = 'https://app.powerbi.com/groups/me/reports/7171e917-4de9-4ce7-ac9e-34918540cf3a/7d10024e7d68ae80975d?experience=power-bi';
+const UI_BASE_URL = import.meta.env.BASE_URL;
 
 const POWER_BI_VISUALS = [
   {
@@ -16,7 +17,7 @@ const POWER_BI_VISUALS = [
     title: 'Total Federal Obligations',
     view: 'KPI card',
     type: 'kpi',
-    image: '/01-total-obligations.png',
+    image: `${UI_BASE_URL}01-total-obligations.png`,
     description: 'The headline KPI summarizes the total federal obligations represented in the report: 104.65bn.',
     insight: 'Answers: How much federal money is represented in the dataset?',
   },
@@ -25,7 +26,7 @@ const POWER_BI_VISUALS = [
     title: 'Top 10 Concentration',
     view: 'KPI card',
     type: 'concentration',
-    image: '/02-top10-concentration.png',
+    image: `${UI_BASE_URL}02-top10-concentration.png`,
     description: 'This KPI shows the share of all federal obligations held by the ten largest recipients: 24.14%.',
     insight: 'Answers: How concentrated is federal spending among the largest recipients?',
   },
@@ -34,7 +35,7 @@ const POWER_BI_VISUALS = [
     title: 'Unique Vendors',
     view: 'KPI card',
     type: 'vendors',
-    image: '/03-unique-vendors.png',
+    image: `${UI_BASE_URL}03-unique-vendors.png`,
     description: 'The vendor count gives the report a scale indicator, showing approximately 35K unique recipients or vendors.',
     insight: 'Answers: How broad is the federal procurement base?',
   },
@@ -43,7 +44,7 @@ const POWER_BI_VISUALS = [
     title: 'Top Recipients by Federal Obligations',
     view: 'Ranked table',
     type: 'table',
-    image: '/06-top-recipients-table.png',
+    image: `${UI_BASE_URL}06-top-recipients-table.png`,
     description: 'The table ranks the ten largest recipients and exposes both their spending rank and total federal obligations for direct comparison.',
     insight: 'Answers: Which recipients receive the most federal obligations?',
   },
@@ -52,7 +53,7 @@ const POWER_BI_VISUALS = [
     title: 'Top Recipients by Federal Obligations',
     view: 'Horizontal bar chart',
     type: 'bars',
-    image: '/04-top-recipients-bars.png',
+    image: `${UI_BASE_URL}04-top-recipients-bars.png`,
     description: 'The bar chart turns the recipient ranking into a visual comparison, making the gap between the largest vendors immediately visible.',
     insight: 'Answers: How do the top recipients compare in obligation volume?',
   },
@@ -61,7 +62,7 @@ const POWER_BI_VISUALS = [
     title: 'Federal Obligations by Fiscal Year',
     view: 'Line chart',
     type: 'trend',
-    image: '/05-fiscal-year-trend.png',
+    image: `${UI_BASE_URL}05-fiscal-year-trend.png`,
     description: 'The fiscal-year line chart shows how total obligations move across time and highlights peaks, declines, and recovery periods.',
     insight: 'Answers: How has federal spending changed by fiscal year?',
   },
@@ -70,7 +71,7 @@ const POWER_BI_VISUALS = [
     title: 'Period-over-Period Spending Change',
     view: 'Waterfall chart',
     type: 'columns',
-    image: '/07-period-change.png',
+    image: `${UI_BASE_URL}07-period-change.png`,
     description: 'The waterfall chart separates increases and decreases by fiscal year so the contribution of each period to the overall change is visible.',
     insight: 'Answers: Which periods drove the increase or decrease in spending?',
   },
@@ -79,7 +80,7 @@ const POWER_BI_VISUALS = [
     title: 'Federal Obligations by Award Type',
     view: 'Pie chart',
     type: 'mix',
-    image: '/08-award-type.png',
+    image: `${UI_BASE_URL}08-award-type.png`,
     description: 'The pie chart breaks total obligations into award types, showing the relative contribution of contracts, grants, and other award categories.',
     insight: 'Answers: Which award types make up federal obligations?',
   },
@@ -128,7 +129,7 @@ function PowerBIView() {
   return (
     <section className="visuals-view">
       <div className="visuals-intro"><div><div className="eyebrow">POWER BI / REPORT PAGE 01</div><h1>US Government Spending<br /><em>&amp; Procurement Analysis.</em></h1></div><p>The actual Power BI page, documented visual by visual. Values shown here match the shared report snapshot dated 9/19/26.</p></div>
-      <section className="live-report"><div className="live-report-header"><div><div className="panel-label"><span>CAPTURED</span> POWER BI REPORT</div><h2>US Government Spending &amp; Procurement Analysis</h2></div><a href={POWER_BI_REPORT_URL} target="_blank" rel="noreferrer">OPEN INTERACTIVE REPORT <span aria-hidden="true">↗</span></a></div><img className="report-screenshot" src="/MAIN%20HEADER%20IMAGE.png" alt="US Government Spending and Procurement Analysis Power BI dashboard" /></section>
+      <section className="live-report"><div className="live-report-header"><div><div className="panel-label"><span>CAPTURED</span> POWER BI REPORT</div><h2>US Government Spending &amp; Procurement Analysis</h2></div><a href={POWER_BI_REPORT_URL} target="_blank" rel="noreferrer">OPEN INTERACTIVE REPORT <span aria-hidden="true">↗</span></a></div><img className="report-screenshot" src={`${UI_BASE_URL}MAIN%20HEADER%20IMAGE.png`} alt="US Government Spending and Procurement Analysis Power BI dashboard" /></section>
       <div className="visual-grid">{POWER_BI_VISUALS.map((visual) => <article className="visual-card" key={`${visual.number}-${visual.view}`}><button className="visual-open" type="button" onClick={() => openVisual(visual)} aria-label={`Open ${visual.title} visual larger`}><div className="visual-card-header"><span>{visual.number} / {visual.view}</span><span>POWER BI VISUAL · VIEW LARGER ↗</span></div><VisualPreview image={visual.image} /></button><div className="visual-card-copy"><h2>{visual.title}</h2><p>{visual.description}</p><div className="visual-insight">{visual.insight}</div></div></article>)}</div>
       {selectedVisual && <div className="visual-modal" role="dialog" aria-modal="true" aria-labelledby="visual-modal-title" onClick={closeVisual}><div className="visual-modal-panel" onClick={(event) => event.stopPropagation()}><div className="visual-modal-header"><div><div className="panel-label"><span>{selectedVisual.number}</span> POWER BI VISUAL</div><h2 id="visual-modal-title">{selectedVisual.title}</h2></div><div className="visual-modal-actions"><button type="button" onClick={() => setVisualZoom((zoom) => Math.max(.75, zoom - .25))} aria-label="Zoom out">−</button><span>{Math.round(visualZoom * 100)}%</span><button type="button" onClick={() => setVisualZoom((zoom) => Math.min(3, zoom + .25))} aria-label="Zoom in">+</button><button type="button" onClick={() => setVisualZoom(1)} aria-label="Reset zoom">RESET</button><button className="visual-close" type="button" onClick={closeVisual} aria-label="Close visual">×</button></div></div><div className="visual-modal-image"><img src={selectedVisual.image} alt={selectedVisual.title} style={{ transform: `scale(${visualZoom})` }} /></div><p className="visual-modal-description">{selectedVisual.description}</p></div></div>}
     </section>
