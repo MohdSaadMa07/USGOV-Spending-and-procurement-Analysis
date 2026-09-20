@@ -128,6 +128,24 @@ curl "http://127.0.0.1:8000/api/agency-spending?fiscal_year=2021&limit=10"
 
 # Optional live evaluation (requires Groq and SQL Server)
 $env:RUN_TEXT2SQL_EVAL = "1"
+
+  ### Deploy to Render
+
+  This repository includes `render.yaml` for a single Render web service. The
+  service builds the Vite UI and serves it from FastAPI at `/ui/`.
+
+  1. Create a Render Web Service from this GitHub repository.
+  2. Select the `main` branch. Render can use the committed `render.yaml`
+    settings automatically.
+  3. Add the values from `.env.example` as Render environment variables. Do
+    not upload `.env`.
+  4. Set `SQL_SERVER` and the related database variables to a reachable remote
+    SQL Server. A local `localhost` database is not reachable from Render.
+  5. Set `LLM_API_KEY` (or `GROQ_API_KEY`) if text-to-SQL is enabled.
+
+  After deployment, open `/ui/`. The root URL is a lightweight service check;
+  `/health` also verifies database connectivity and may return `503` until the
+  remote database is configured.
 pytest -q tests/text2sql_eval.py -s
 ```
 
