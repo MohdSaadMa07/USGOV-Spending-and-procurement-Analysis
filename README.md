@@ -95,12 +95,13 @@ The deployed application embeds the live Power BI report in its **Power BI
 Report** tab. The report replaces screenshot-based presentation in the active
 UI while the original image assets remain in the repository for archival use.
 
-Read the visuals from overview to detail: use KPI cards to establish total
-obligations, supplier concentration, and vendor breadth; use fiscal-year and
-period-change charts to explain movement over time; then cross-filter recipient
-and award-type visuals to find the organizations and procurement mechanisms
-behind the totals. Use the Power BI slicers, tooltips, and action bar before
-comparing values across visuals.
+Each report visual has a specific analytical purpose: the three KPI cards show
+total obligations, top-ten recipient concentration, and unique vendor count;
+the recipient table and bar chart show the exact ranking and relative size of
+the leading vendors; the fiscal-year line chart shows the long-term trend; the
+waterfall explains each period's increase or decrease; and the award-type pie
+chart shows which procurement mechanisms make up total obligations. Use Power
+BI slicers, tooltips, and the action bar before comparing values across visuals.
 
 ## Data Model and Analytical Views
 
