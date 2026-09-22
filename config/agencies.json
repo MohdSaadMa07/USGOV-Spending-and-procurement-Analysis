@@ -1,0 +1,56 @@
+{
+  "_comment": "Verified awarding-agency identifiers for the USAspending.gov API.",
+  "_verified_via": "GET https://api.usaspending.gov/api/v2/references/toptier_agencies/ (checked 2026-09-12; agency_id / toptier_code / agency_name). The transaction-search and transaction-download filters address agencies by full agency NAME (see 'filter_name'), not by numeric id.",
+  "_filter_usage": "POST /api/v2/search/spending_by_transaction(_count)/ and POST /api/v2/download/transactions/ with filters.agencies = [{\"type\": \"awarding\", \"tier\": \"toptier\", \"name\": \"<filter_name>\"}]",
+  "_award_type_codes_source": "GET https://api.usaspending.gov/api/v2/references/award_types/ -> contracts = {A: BPA Call, B: Purchase Order, C: Delivery Order, D: Definitive Contract}. IDV codes (IDV_A..IDV_E) are deliberately excluded: the API groups IDVs separately and they are not prime-contract transactions.",
+  "agencies": {
+    "gsa": {
+      "slug": "gsa",
+      "short_name": "General Services Administration",
+      "filter_name": "General Services Administration",
+      "agency_id": 614,
+      "toptier_code": "047",
+      "abbreviation": "GSA"
+    },
+    "dod": {
+      "slug": "dod",
+      "short_name": "Department of Defense",
+      "filter_name": "Department of Defense",
+      "agency_id": 1173,
+      "toptier_code": "097",
+      "abbreviation": "DOD"
+    },
+    "hhs": {
+      "slug": "hhs",
+      "short_name": "Department of Health and Human Services",
+      "filter_name": "Department of Health and Human Services",
+      "agency_id": 806,
+      "toptier_code": "075",
+      "abbreviation": "HHS"
+    },
+    "dot": {
+      "slug": "dot",
+      "short_name": "Department of Transportation",
+      "filter_name": "Department of Transportation",
+      "agency_id": 731,
+      "toptier_code": "069",
+      "abbreviation": "DOT"
+    },
+    "dhs": {
+      "slug": "dhs",
+      "short_name": "Department of Homeland Security",
+      "filter_name": "Department of Homeland Security",
+      "agency_id": 766,
+      "toptier_code": "070",
+      "abbreviation": "DHS"
+    },
+    "doe": {
+      "slug": "doe",
+      "short_name": "Department of Energy",
+      "filter_name": "Department of Energy",
+      "agency_id": 930,
+      "toptier_code": "089",
+      "abbreviation": "DOE"
+    }
+  }
+}

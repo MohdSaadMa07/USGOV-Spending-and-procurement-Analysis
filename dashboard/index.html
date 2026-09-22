@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="description"
+      content="Interactive Power BI dashboard for federal contract analytics."
+    />
+    <title>Federal Contract Analytics | Interactive Dashboard</title>
+    <style>
+      :root {
+        color-scheme: light;
+        --ink: #13243a;
+        --muted: #526477;
+        --surface: #ffffff;
+        --canvas: #f3f6fa;
+        --accent: #087e8b;
+        --border: #d8e1ea;
+      }
+
+      * { box-sizing: border-box; }
+
+      body {
+        margin: 0;
+        background: var(--canvas);
+        color: var(--ink);
+        font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        line-height: 1.55;
+      }
+
+      main { max-width: 1440px; margin: 0 auto; padding: 2rem clamp(1rem, 4vw, 4rem) 3rem; }
+      .eyebrow { color: var(--accent); font-size: .78rem; font-weight: 800; letter-spacing: .11em; margin: 0; text-transform: uppercase; }
+      h1 { font-size: clamp(2rem, 4vw, 3.25rem); letter-spacing: -.04em; line-height: 1.05; margin: .35rem 0 .9rem; }
+      .intro { color: var(--muted); font-size: 1.05rem; max-width: 72ch; margin: 0 0 1.75rem; }
+
+      .report-shell {
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: 16px;
+        box-shadow: 0 14px 35px rgb(19 36 58 / 10%);
+        overflow: hidden;
+      }
+      .report-label { align-items: center; border-bottom: 1px solid var(--border); display: flex; font-size: .9rem; font-weight: 700; gap: .6rem; padding: .8rem 1rem; }
+      .report-label::before { background: var(--accent); border-radius: 50%; content: ""; height: .55rem; width: .55rem; }
+      iframe { border: 0; display: block; height: min(78vh, 950px); min-height: 640px; width: 100%; }
+
+      .guide { display: grid; gap: 1rem; grid-template-columns: repeat(3, 1fr); margin-top: 1.5rem; }
+      .guide article { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 1.15rem; }
+      h2 { font-size: 1rem; margin: 0 0 .45rem; }
+      .guide p { color: var(--muted); font-size: .94rem; margin: 0; }
+      .note { color: var(--muted); font-size: .85rem; margin: 1.1rem 0 0; }
+
+      @media (max-width: 780px) {
+        main { padding-top: 1.25rem; }
+        iframe { height: 72vh; min-height: 500px; }
+        .guide { grid-template-columns: 1fr; }
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <p class="eyebrow">Federal Contract Analytics</p>
+      <h1>Explore the contract story interactively.</h1>
+      <p class="intro">
+        Use the Power BI report to move from overall obligation and transaction trends to the agencies,
+        recipients, industries, and places behind them. Select slicers and chart elements to keep every
+        visual focused on the same procurement question.
+      </p>
+
+      <section class="report-shell" aria-label="Embedded Power BI federal contract analytics report">
+        <div class="report-label">Interactive Power BI report</div>
+        <iframe
+          title="Federal Contract Analytics Power BI report"
+          src="https://app.powerbi.com/reportEmbed?reportId=7171e917-4de9-4ce7-ac9e-34918540cf3a&amp;autoAuth=true&amp;ctid=76bed47f-8633-49b2-8de1-35950dd0251c&amp;actionBarEnabled=true"
+          allowfullscreen="true"
+        >
+          <p>Your browser does not support embedded reports. Open the report in Power BI instead.</p>
+        </iframe>
+      </section>
+
+      <section class="guide" aria-label="How to interpret the dashboard">
+        <article>
+          <h2>1. Start with trend</h2>
+          <p>Use the fiscal-year visuals to spot sustained changes versus one-off obligation spikes. FY2026 is year-to-date, so do not interpret it as a completed annual total.</p>
+        </article>
+        <article>
+          <h2>2. Explain the totals</h2>
+          <p>Cross-filter agency, sub-agency, recipient, NAICS, or product/service visuals to identify the organizations and markets contributing to a headline metric.</p>
+        </article>
+        <article>
+          <h2>3. Test the context</h2>
+          <p>Check the active slicers and tooltip definitions before comparing charts. Obligation, award, and transaction measures answer different questions.</p>
+        </article>
+      </section>
+
+      <p class="note">Data scope: USAspending.gov prime contract transactions. The report retains Power BI controls for filtering, details, and accessibility options.</p>
+    </main>
+  </body>
+</html>
