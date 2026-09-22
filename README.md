@@ -89,22 +89,18 @@ The Power BI analysis includes:
 - Period-over-period change waterfall
 - Award-type composition chart
 
-## Screenshots
+## Interactive Power BI Report
 
-### Power BI Report
+The deployed application embeds the live Power BI report in its **Power BI
+Report** tab. The report replaces screenshot-based presentation in the active
+UI while the original image assets remain in the repository for archival use.
 
-![Power BI report](ui/public/MAIN%20HEADER%20IMAGE.png)
-
-| Analytical view | Preview |
-| --- | --- |
-| Total obligations | [Open image](ui/public/01-total-obligations.png) |
-| Top-10 concentration | [Open image](ui/public/02-top10-concentration.png) |
-| Unique vendors | [Open image](ui/public/03-unique-vendors.png) |
-| Top recipients | [Open image](ui/public/06-top-recipients-table.png) |
-| Fiscal-year trend | [Open image](ui/public/05-fiscal-year-trend.png) |
-| Award types | [Open image](ui/public/08-award-type.png) |
-
-> Add a Query Desk screenshot at `ui/public/query-desk.png` when available.
+Read the visuals from overview to detail: use KPI cards to establish total
+obligations, supplier concentration, and vendor breadth; use fiscal-year and
+period-change charts to explain movement over time; then cross-filter recipient
+and award-type visuals to find the organizations and procurement mechanisms
+behind the totals. Use the Power BI slicers, tooltips, and action bar before
+comparing values across visuals.
 
 ## Data Model and Analytical Views
 
@@ -194,9 +190,9 @@ For natural-language queries, add your own Groq key to `.env`. Never commit `.en
 
 ## Power BI Report
 
-[Open the interactive Power BI report](https://app.powerbi.com/groups/me/reports/7171e917-4de9-4ce7-ac9e-34918540cf3a/7d10024e7d68ae80975d?experience=power-bi)
-
-Power BI access may require permission. The captured visuals in this repository provide a viewable alternative.
+The report is embedded at `/ui/` and uses Power BI's native filters, tooltips,
+and action bar. Viewers must have access under the report's Power BI sharing or
+embed settings.
 
 ## Analytical Safeguards
 
